@@ -1,7 +1,7 @@
-import { SongBreadcrumbs } from "../molecules/SongBreadcrumbs"
-import { Base } from "../templates/Base"
-import songs from "../../assets/json/songs.json"
-import { SongCard } from "../molecules/SongCard"
+import { SongBreadcrumbs } from "../components/molecules/SongBreadcrumbs"
+import { Base } from "../components/templates/Base"
+import songs from "../assets/json/songs.json"
+import { SongCard } from "../components/molecules/SongCard"
 
 export const Home = () => {
     return (

@@ -14,7 +14,7 @@ export const Sidebar = ({ songs }) => {
             </Card>
             <Card>
                 <List className="mb-4">
-                    <ListItem icon="book" text="Your Playlist" />
+                    <ListItem icon="book" text="Your Library" />
                 </List>
                 <div className="max-h-80 hover:overflow-y-scroll overflow-hidden">
                     {songs.map((song) => {
