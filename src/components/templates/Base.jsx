@@ -6,7 +6,7 @@ import { Footer } from "../organisms/Footer"
 
 export const Base = ({ children }) => {
     return (
-        <div className="text-slate-300 bg-slate-950 p-2 min-h-screen box-border">
+        <div className="text-slate-300 bg-slate-950 p-2 min-h-screen box-border min-w-max">
             <div className="flex flex-row gap-x-2">
                 <Sidebar songs={songs} />
                 <div className="basis-2/3">
