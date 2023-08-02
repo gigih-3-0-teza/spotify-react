@@ -1,6 +1,6 @@
 import ButtonIcon from "../molecules/ButtonIcon"
 import {SPOTIFY_AUTH_URL} from "../../config/constants.js";
-import {AuthContext} from "../../provider/AuthProvide.jsx";
+import {AuthContext} from "../../provider/AuthProvider.jsx";
 import {useContext} from "react";
 import {Link} from "react-router-dom";
 
