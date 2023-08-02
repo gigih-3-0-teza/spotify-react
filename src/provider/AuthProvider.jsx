@@ -41,8 +41,10 @@ const AuthProvider = ({children}) => {
     // cek from localstorage and run just once
     useEffect(() => {
         const localToken = localStorage.getItem('SPOTIFY_ACCESS_TOKEN');
-        if (!localToken)
-            window.location = SPOTIFY_AUTH_URL;
+        if (!localToken) {
+            // window.location = SPOTIFY_AUTH_URL;
+            return;
+        }
         if (dataFetchedRef.current) return;
         dataFetchedRef.current = true;
         setIsAuthenticated(true);
