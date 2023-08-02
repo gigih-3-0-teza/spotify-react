@@ -7,7 +7,7 @@ import {Link} from "react-router-dom";
 export const Header = () => {
     const {isAuthenticated} = useContext(AuthContext);
     return (
-        <header className="sticky top-0 flex flex-row py-3 mb-2 bg-slate-800">
+        <header className="sticky top-0 flex flex-row py-3 mb-2 bg-slate-800 z-10">
             <div className="basis-1/2">
                 <ButtonIcon icon="chevron-left" />
                 <ButtonIcon icon="chevron-right" />

@@ -5,6 +5,7 @@ import {SongCardVertical} from "../molecules/SongCardVertical"
 import {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../../provider/AuthProvider.jsx";
 import {SPOTIFY_API_URL} from "../../config/constants.js";
+import {Link} from "react-router-dom";
 
 export const Sidebar = () => {
     const {token} = useContext(AuthContext);
@@ -43,8 +44,12 @@ export const Sidebar = () => {
         <aside className="basis-1/3 flex flex-col gap-y-2">
             <Card className="sticky top-0">
                 <List>
-                    <ListItem icon="home" text="Home"/>
-                    <ListItem icon="search" text="Search"/>
+                    <Link to="/">
+                        <ListItem icon="home" text="Home"/>
+                    </Link>
+                    <Link to="/search">
+                        <ListItem icon="search" text="Search"/>
+                    </Link>
                 </List>
             </Card>
             <Card>
