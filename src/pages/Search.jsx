@@ -59,7 +59,7 @@ export const Search = () => {
                        placeholder="What do you want to listen to?" required value={search} onChange={handleChange}/>
             </div>
             <SongBreadcrumbs title="Search result"/>
-            <div className="grid grid-cols-4 gap-2 mb-5">
+            <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-5">
                 {songs.map((song) => {
                     return (
                         <SongCard song={song} key={song.id}/>

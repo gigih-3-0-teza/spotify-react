@@ -45,7 +45,7 @@ export const Home = () => {
             {token && (
                 <>
                     <SongBreadcrumbs title="Recently played"/>
-                    <div className="grid grid-cols-4 gap-2 mb-5">
+                    <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-5">
                         {songs.map((song, index) => {
                             if (index < 4) {
                                 return (
@@ -55,7 +55,7 @@ export const Home = () => {
                         })}
                     </div>
                     <SongBreadcrumbs title="Today's biggest hits"/>
-                    <div className="grid grid-cols-4 gap-2 mb-5">
+                    <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-5">
                         {songs.map((song, index) => {
                             if (index > 3 && index < 8) {
                                 return (
@@ -65,7 +65,7 @@ export const Home = () => {
                         })}
                     </div>
                     <SongBreadcrumbs title="Fresh new music"/>
-                    <div className="grid grid-cols-4 gap-2 mb-8">
+                    <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-8">
                         {songs.map((song, index) => {
                             if (index > 5 && index < 10) {
                                 return (
