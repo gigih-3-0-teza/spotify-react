@@ -11,7 +11,7 @@ export const Home = () => {
     const {token} = useContext(AuthContext);
     const loadSongs = async () => {
         try {
-            const res = await fetch(`${SPOTIFY_API_URL}me/top/tracks?limit=10`, {
+            const res = await fetch(`${SPOTIFY_API_URL}recommendations?seed_genres=rock%2Cpop`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
@@ -22,7 +22,7 @@ export const Home = () => {
                 console.log(data.error);
                 return;
             }
-            setSongs(data.items.map((item) => {
+            setSongs(data.tracks.map((item) => {
                 return {
                     id: item.id,
                     title: item.name,
@@ -42,40 +42,10 @@ export const Home = () => {
     }, [token]);
     return (
         <Base>
-            {token && (
-                <>
-                    <SongBreadcrumbs title="Recently played"/>
-                    <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-5">
-                        {songs.map((song, index) => {
-                            if (index < 4) {
-                                return (
-                                    <SongCard song={song} key={song.id}/>
-                                )
-                            }
-                        })}
-                    </div>
-                    <SongBreadcrumbs title="Today's biggest hits"/>
-                    <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-5">
-                        {songs.map((song, index) => {
-                            if (index > 3 && index < 8) {
-                                return (
-                                    <SongCard song={song} key={song.id}/>
-                                )
-                            }
-                        })}
-                    </div>
-                    <SongBreadcrumbs title="Fresh new music"/>
-                    <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-8">
-                        {songs.map((song, index) => {
-                            if (index > 5 && index < 10) {
-                                return (
-                                    <SongCard song={song} key={song.id}/>
-                                )
-                            }
-                        })}
-                    </div>
-                </>
-            )}
+            <SongBreadcrumbs title="Recommendations"/>
+            <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-5">
+                {songs.map((song) => <SongCard song={song} key={song.id}/>)}
+            </div>
         </Base>
     )
 }

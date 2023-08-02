@@ -29,7 +29,7 @@ export const Sidebar = () => {
                     title: item.name,
                     artists: [item.type, item.owner.display_name],
                     thumbnail: item.images[0].url,
-                    url: item.external_urls.spotify,
+                    url: `/playlist/${item.id}`,
                 }
             }));
         } catch (e) {
