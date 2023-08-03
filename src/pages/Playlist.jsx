@@ -5,6 +5,7 @@ import {SPOTIFY_API_URL} from "../config/constants.js";
 import {AuthContext} from "../provider/AuthProvider.jsx";
 import {useContext, useEffect, useState} from "react";
 import {SongCardVertical} from "../components/molecules/SongCardVertical.jsx";
+import Banner from "../components/molecules/Banner.jsx";
 
 const Playlist = () => {
     const {id} = useParams();
@@ -20,11 +21,10 @@ const Playlist = () => {
             setPlaylist({
                 id: res.data.id,
                 name: res.data.name,
-                owner: res.data.owner.display_name,
                 type: res.data.type,
                 thumbnail: res.data.images[0].url,
-                total: res.data.tracks.total,
                 snapshot: res.data.snapshot_id,
+                description: `${res.data.owner.display_name} - ${res.data.tracks.total} song`,
             });
             setTracks(res.data.tracks.items.map((item) => {
                 return {
@@ -48,16 +48,7 @@ const Playlist = () => {
 
     return (
         <Base>
-            <div className="flex flex-wrap gap-5 my-8">
-                <div className="md:basis-1/6 rounded-xl shadow-2xl overflow-hidden">
-                    <img loading="lazy" src={playlist.thumbnail} alt={playlist.name} className="w-1/2 mx-auto sm:w-full" />
-                </div>
-                <div className="md:mt-auto">
-                    <h6 className="text-sm">{playlist.type}</h6>
-                    <h1 className="text-4xl font-bold mb-3">{playlist.name}</h1>
-                    <h6 className="text-sm"><span className="font-bold">{playlist.owner}</span> - {playlist.total} song</h6>
-                </div>
-            </div>
+            <Banner item={playlist} />
             {tracks.map((song) => {
                 return (
                     <SongCardVertical song={song} key={song.id}/>
