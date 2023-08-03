@@ -4,25 +4,15 @@ import List from "../molecules/List"
 import {SongCardVertical} from "../molecules/SongCardVertical"
 import {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../../provider/AuthProvider.jsx";
-import {SPOTIFY_API_URL} from "../../config/constants.js";
 import {Link} from "react-router-dom";
+import {getPlaylists} from "../../libs/spotify-api.js";
 
 export const Sidebar = () => {
     const {token} = useContext(AuthContext);
     const [playlists, setPlaylists] = useState([]);
     const loadPlaylists = async () => {
         try {
-            const res = await fetch(`${SPOTIFY_API_URL}me/playlists`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-            });
-            const data = await res.json();
-            if (data.error) {
-                console.log(data.error);
-                return;
-            }
+            const data = await getPlaylists();
             setPlaylists(data.items.map((item) => {
                 return {
                     id: item.id,
@@ -56,7 +46,7 @@ export const Sidebar = () => {
                 <List className="mb-4">
                     <ListItem icon="book" text="Your Library"/>
                 </List>
-                <div className="max-h-96 hover:overflow-y-scroll overflow-hidden hover:overscroll-none">
+                <div className="h-96 hover:overflow-y-scroll overflow-hidden hover:overscroll-none">
                     {playlists.map((song) => {
                         return (
                             <SongCardVertical song={song} key={song.id}/>
