@@ -1,32 +1,30 @@
 import {Base} from "../components/templates/Base.jsx";
 import {useParams} from "react-router-dom";
-import axios from "axios";
-import {SPOTIFY_API_URL} from "../config/constants.js";
-import {AuthContext} from "../provider/AuthProvider.jsx";
 import {useContext, useEffect, useState} from "react";
 import {SongCardVertical} from "../components/molecules/SongCardVertical.jsx";
 import Banner from "../components/molecules/Banner.jsx";
+import {deleteTrackFromPlaylist, getPlaylistDetail} from "../libs/spotify-api.js";
+import ButtonIcon from "../components/molecules/ButtonIcon.jsx";
+import {AuthContext} from "../provider/AuthProvider.jsx";
 
 const Playlist = () => {
     const {id} = useParams();
-    const {token} = useContext(AuthContext);
     const [playlist, setPlaylist] = useState({});
     const [tracks, setTracks] = useState([]);
+    const {user} = useContext(AuthContext);
     const loadPlaylist = async () => {
-        axios.get(`${SPOTIFY_API_URL}playlists/${id}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            }
-        }).then((res) => {
+        try {
+            const playlist = await getPlaylistDetail(id);
             setPlaylist({
-                id: res.data.id,
-                name: res.data.name,
-                type: res.data.type,
-                thumbnail: res.data.images[0].url,
-                snapshot: res.data.snapshot_id,
-                description: `${res.data.owner.display_name} - ${res.data.tracks.total} song`,
+                id: playlist.id,
+                name: playlist.name,
+                type: playlist.type,
+                thumbnail: playlist.images[0].url,
+                snapshot: playlist.snapshot_id,
+                description: `${playlist.owner.display_name} - ${playlist.tracks.total} song`,
+                ownerID: playlist.owner.id,
             });
-            setTracks(res.data.tracks.items.map((item) => {
+            setTracks(playlist.tracks.items.map((item) => {
                 return {
                     id: item.track.id,
                     title: item.track.name,
@@ -36,22 +34,43 @@ const Playlist = () => {
                     uri: item.track.uri,
                 }
             }));
-        }).catch((err) => {
-            console.info(err);
-        });
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     useEffect(() => {
-        if (token)
-            loadPlaylist();
-    }, [token, id]);
+        loadPlaylist();
+    }, [id]);
+
+    const handleCLick = async (e) => {
+        const uri = e.target.id;
+        if (uri) {
+            try {
+                const res = await deleteTrackFromPlaylist(playlist.id, uri, playlist.snapshot);
+                if (res) {
+                    const newTracks = tracks.filter((track) => track.uri !== uri);
+                    setTracks(newTracks);
+                }
+            } catch (e) {
+                alert(e.error.message);
+            }
+        }
+    }
+    const ButtonDelete = ({uri}) => {
+        return (
+            <button onClick={handleCLick} className="hover:underline" id={uri}>
+                remove
+            </button>
+        )
+    }
 
     return (
         <Base>
-            <Banner item={playlist} />
+            <Banner item={playlist}/>
             {tracks.map((song) => {
                 return (
-                    <SongCardVertical song={song} key={song.id}/>
+                    <SongCardVertical song={song} key={song.id} action={user.id === playlist.ownerID && <ButtonDelete uri={song.uri}/>}/>
                 )
             })}
         </Base>
