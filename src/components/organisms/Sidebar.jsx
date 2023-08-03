@@ -56,7 +56,7 @@ export const Sidebar = () => {
                 <List className="mb-4">
                     <ListItem icon="book" text="Your Library"/>
                 </List>
-                <div className="max-h-80 hover:overflow-y-scroll overflow-hidden hover:overscroll-none">
+                <div className="max-h-96 hover:overflow-y-scroll overflow-hidden hover:overscroll-none">
                     {playlists.map((song) => {
                         return (
                             <SongCardVertical song={song} key={song.id}/>

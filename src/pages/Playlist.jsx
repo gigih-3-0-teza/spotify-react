@@ -24,6 +24,7 @@ const Playlist = () => {
                 type: res.data.type,
                 thumbnail: res.data.images[0].url,
                 total: res.data.tracks.total,
+                snapshot: res.data.snapshot_id,
             });
             setTracks(res.data.tracks.items.map((item) => {
                 return {
@@ -31,7 +32,8 @@ const Playlist = () => {
                     title: item.track.name,
                     artists: item.track.artists.map((artist) => artist.name),
                     thumbnail: item.track.album.images[0].url,
-                    url: item.track.external_urls.spotify,
+                    url: `/track/${item.track.id}`,
+                    uri: item.track.uri,
                 }
             }));
         }).catch((err) => {
@@ -47,7 +49,7 @@ const Playlist = () => {
     return (
         <Base>
             <div className="flex flex-wrap gap-5 my-8">
-                <div className="md:basis-1/6">
+                <div className="md:basis-1/6 rounded-xl shadow-2xl overflow-hidden">
                     <img loading="lazy" src={playlist.thumbnail} alt={playlist.name} className="w-1/2 mx-auto sm:w-full" />
                 </div>
                 <div className="md:mt-auto">

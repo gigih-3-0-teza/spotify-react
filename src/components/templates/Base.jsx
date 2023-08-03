@@ -9,7 +9,7 @@ export const Base = ({children}) => {
             <div className="grid gap-2 md:grid-cols-3">
                 <Sidebar/>
                 <div className="md:col-span-2">
-                    <Card className="px-4">
+                    <Card className="px-4 min-h-full">
                         <Header/>
                         <main>
                             {children}
@@ -17,7 +17,6 @@ export const Base = ({children}) => {
                     </Card>
                 </div>
             </div>
-            {/*<Footer />*/}
         </div>
     )
 }

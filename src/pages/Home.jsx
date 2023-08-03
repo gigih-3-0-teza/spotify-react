@@ -11,7 +11,7 @@ export const Home = () => {
     const {token} = useContext(AuthContext);
     const loadSongs = async () => {
         try {
-            const res = await fetch(`${SPOTIFY_API_URL}recommendations?seed_genres=rock%2Cpop`, {
+            const res = await fetch(`${SPOTIFY_API_URL}recommendations?seed_genres=k-pop%2Cpop%2Canime%2Cmovies`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ export const Home = () => {
                     title: item.name,
                     artists: item.artists.map((artist) => artist.name),
                     thumbnail: item.album.images[0].url,
-                    url: item.external_urls.spotify,
+                    url: `/track/${item.id}`,
                 }
             }));
         } catch (e) {

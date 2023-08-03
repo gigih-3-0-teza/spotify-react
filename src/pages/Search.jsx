@@ -32,7 +32,7 @@ export const Search = () => {
                     title: item.name,
                     artists: item.artists.map((artist) => artist.name),
                     thumbnail: item.album.images[0].url,
-                    url: item.external_urls.spotify,
+                    url: `/track/${item.id}`,
                 }
             }));
         } catch (e) {
